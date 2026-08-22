@@ -1,0 +1,10 @@
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# logs
+*.log
+
+# 本地个人记忆（个人画像 / 反馈日志），永远不要提交进仓库
+结课作业写作系统/
