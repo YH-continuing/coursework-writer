@@ -25,14 +25,14 @@
 ## 快速开始（在线一键安装，推荐）
 
 > 前提：已经安装并在使用 DeepSeek Harness（DSH）。
-> 原理：下面这条命令会先从本仓库下载安装脚本并执行，脚本再自动把两个 preset 文件下载到 DSH 的模式目录。**不需要先下载、不需要碰任何提示词。**
+> 通道：默认走 **jsDelivr CDN**（缓存自 GitHub 仓库，国内一般可访问）。海外 / 想拿最新版可改用 GitHub raw 直链，见下方「安装通道说明」。
 
 ### Windows（PowerShell）
 
 复制这一行，粘贴到 PowerShell 回车：
 
 ```powershell
-irm https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.ps1 | iex
+irm https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.ps1 | iex
 ```
 
 ### macOS / Linux（终端）
@@ -40,12 +40,32 @@ irm https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/insta
 复制这一行，粘贴到终端回车：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.sh | bash
 ```
 
 装完打开 DSH，在**模式选择器**里选「结课作业写作」，新开一个会话即可。
 
-> 想先看看脚本内容再运行？用浏览器打开上面那串 `https://raw.githubusercontent.com/...` 链接，脚本全文都公开在仓库里，可先审阅。
+> 想先看看脚本内容再运行？用浏览器打开上面那串 `https://cdn.jsdelivr.net/...` 链接，脚本全文都公开在仓库里，可先审阅。
+
+### 安装通道说明（国内 / 海外怎么选）
+
+| 通道 | 地址 | 适合场景 |
+|---|---|---|
+| **jsDelivr CDN**（默认） | `cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/...` | 国内一键安装；文件更新可能稍有延迟 |
+| **GitHub raw** | `raw.githubusercontent.com/YH-continuing/coursework-writer/main/...` | 海外 / 能访问 GitHub；永远最新 |
+| **Gitee 镜像** | `gitee.com/hu-youjun-114514/coursework-writer` | 国内浏览文档、`git clone`；注意 Gitee 的 raw 直链需登录，不适合脚本下载 |
+
+#### 国内备用：用 Gitee 手动克隆安装
+
+jsDelivr 也不通时，走 Gitee（国内秒开）：
+
+```bash
+git clone https://gitee.com/hu-youjun-114514/coursework-writer.git
+cd coursework-writer
+# 然后把 preset/coursework-writer 文件夹手动复制到 ~/.dsh/.agent-presets/
+```
+
+或直接在 Gitee 网页上看 README 和代码。
 
 ---
 

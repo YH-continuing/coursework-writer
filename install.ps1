@@ -1,12 +1,13 @@
-# 结课作业写作助手 · Windows 在线安装
+# 结课作业写作助手 · Windows 在线安装（jsDelivr CDN，国内可用）
 # 一行命令安装（复制这一行，粘贴到 PowerShell 回车）：
-#   irm https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.ps1 | iex
+#   irm https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.ps1 | iex
 #
-# 原理：从 GitHub 仓库的固定链接下载两个 preset 文件，放进 DSH 的模式目录。
+# 原理：从 jsDelivr CDN（缓存自 GitHub 仓库，国内一般可访问）下载两个 preset 文件，
+#       放进 DSH 的模式目录。
 
 $ErrorActionPreference = 'Stop'
 
-$base   = 'https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/preset/coursework-writer'
+$base   = 'https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/preset/coursework-writer'
 $dshHome = if ($env:DSH_HOME) { $env:DSH_HOME } else { Join-Path $HOME '.dsh' }
 $dest   = Join-Path $dshHome '.agent-presets\coursework-writer'
 
