@@ -1,20 +1,21 @@
-# 结课作业写作助手 · Windows 一键安装
-# 用法：在本目录打开 PowerShell，运行  .\install.ps1
+# 结课作业写作助手 · Windows 在线安装
+# 一行命令安装（复制这一行，粘贴到 PowerShell 回车）：
+#   irm https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.ps1 | iex
+#
+# 原理：从 GitHub 仓库的固定链接下载两个 preset 文件，放进 DSH 的模式目录。
 
 $ErrorActionPreference = 'Stop'
 
+$base   = 'https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/preset/coursework-writer'
 $dshHome = if ($env:DSH_HOME) { $env:DSH_HOME } else { Join-Path $HOME '.dsh' }
-$src  = Join-Path $PSScriptRoot 'preset\coursework-writer'
-$dest = Join-Path $dshHome '.agent-presets\coursework-writer'
+$dest   = Join-Path $dshHome '.agent-presets\coursework-writer'
 
-if (-not (Test-Path (Join-Path $src 'agent.cordis.yml'))) {
-    Write-Host "错误：找不到 $src" -ForegroundColor Red
-    Write-Host "请确认 install.ps1 和 preset 文件夹在同一个目录下。" -ForegroundColor Red
-    exit 1
-}
+Write-Host "正在安装「结课作业写作」模式 ..."
 
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
-Copy-Item -Path (Join-Path $src '*') -Destination $dest -Recurse -Force
+
+Invoke-WebRequest -Uri "$base/agent.cordis.yml" -OutFile (Join-Path $dest 'agent.cordis.yml') -TimeoutSec 60
+Invoke-WebRequest -Uri "$base/preset.yml"      -OutFile (Join-Path $dest 'preset.yml')      -TimeoutSec 60
 
 Write-Host ""
 Write-Host "✓ 安装完成" -ForegroundColor Green

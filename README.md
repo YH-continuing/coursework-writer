@@ -22,26 +22,30 @@
 
 ---
 
-## 快速开始（一键安装）
+## 快速开始（在线一键安装，推荐）
 
 > 前提：已经安装并在使用 DeepSeek Harness（DSH）。
+> 原理：下面这条命令会先从本仓库下载安装脚本并执行，脚本再自动把两个 preset 文件下载到 DSH 的模式目录。**不需要先下载、不需要碰任何提示词。**
 
 ### Windows（PowerShell）
 
-在项目目录里运行：
+复制这一行，粘贴到 PowerShell 回车：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
+irm https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.ps1 | iex
 ```
 
-### macOS / Linux
+### macOS / Linux（终端）
+
+复制这一行，粘贴到终端回车：
 
 ```bash
-cd coursework-writer
-bash install.sh
+curl -fsSL https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.sh | bash
 ```
 
 装完打开 DSH，在**模式选择器**里选「结课作业写作」，新开一个会话即可。
+
+> 想先看看脚本内容再运行？用浏览器打开上面那串 `https://raw.githubusercontent.com/...` 链接，脚本全文都公开在仓库里，可先审阅。
 
 ---
 

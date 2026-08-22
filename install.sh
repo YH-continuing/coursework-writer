@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
-# 结课作业写作助手 · macOS / Linux 一键安装
+# 结课作业写作助手 · macOS / Linux 在线安装
+# 一行命令安装（复制这一行，粘贴到终端回车）：
+#   curl -fsSL https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/install.sh | bash
+#
+# 原理：从 GitHub 仓库的固定链接下载两个 preset 文件，放进 DSH 的模式目录。
+
 set -euo pipefail
 
+BASE="https://raw.githubusercontent.com/YH-continuing/coursework-writer/main/preset/coursework-writer"
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
-SRC="$(cd "$(dirname "$0")" && pwd)/preset/coursework-writer"
 DEST="$DSH_HOME/.agent-presets/coursework-writer"
 
-if [ ! -f "$SRC/agent.cordis.yml" ]; then
-  echo "错误：找不到 $SRC" >&2
-  echo "请确认 install.sh 和 preset 文件夹在同一个目录下。" >&2
-  exit 1
-fi
+echo "正在安装「结课作业写作」模式 ..."
 
 mkdir -p "$DEST"
-cp -R "$SRC/." "$DEST/"
+curl -fsSL "$BASE/agent.cordis.yml" -o "$DEST/agent.cordis.yml"
+curl -fsSL "$BASE/preset.yml"      -o "$DEST/preset.yml"
 
 echo ""
 echo "✓ 安装完成"
