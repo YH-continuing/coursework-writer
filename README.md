@@ -32,7 +32,7 @@
 复制这一行，粘贴到 PowerShell 回车：
 
 ```powershell
-irm https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.ps1 | iex
+irm https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/install.ps1 | iex
 ```
 
 ### macOS / Linux（终端）
@@ -40,7 +40,7 @@ irm https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.ps1
 复制这一行，粘贴到终端回车：
 
 ```bash
-curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/install.sh | bash
 ```
 
 装完打开 DSH，在**模式选择器**里选「结课作业写作」，新开一个会话即可。
@@ -51,9 +51,11 @@ curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/inst
 
 | 通道 | 地址 | 适合场景 |
 |---|---|---|
-| **jsDelivr CDN**（默认） | `cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/...` | 国内一键安装；文件更新可能稍有延迟 |
+| **jsDelivr CDN**（默认） | `cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/...` | 国内一键安装；文件更新可能稍有延迟 |
 | **GitHub raw** | `raw.githubusercontent.com/YH-continuing/coursework-writer/main/...` | 海外 / 能访问 GitHub；永远最新 |
 | **Gitee 镜像** | `gitee.com/hu-youjun-114514/coursework-writer` | 国内浏览文档、`git clone`；注意 Gitee 的 raw 直链需登录，不适合脚本下载 |
+
+> 版本更新：以后改动规则，打一个新 tag（如 `v1.0.1`）并推送，再把 README 里的 `@v1.0.0` 换成新版本号即可——jsDelivr 按 tag 缓存，永远精确、不滞后。
 
 #### 国内备用：用 Gitee 手动克隆安装
 

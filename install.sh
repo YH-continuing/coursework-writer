@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # 结课作业写作助手 · macOS / Linux 在线安装（jsDelivr CDN，国内可用）
 # 一行命令安装（复制这一行，粘贴到终端回车）：
-#   curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/install.sh | bash
+#   curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/install.sh | bash
 #
 # 原理：从 jsDelivr CDN（缓存自 GitHub 仓库，国内一般可访问）下载两个 preset 文件，
 #       放进 DSH 的模式目录。
 
 set -euo pipefail
 
-BASE="https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@main/preset/coursework-writer"
+BASE="https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/preset/coursework-writer"
 DSH_HOME="${DSH_HOME:-$HOME/.dsh}"
 DEST="$DSH_HOME/.agent-presets/coursework-writer"
 
