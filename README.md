@@ -63,41 +63,52 @@ flowchart TD
 
 ## 🚀 极速安装与部署
 
-> **前置条件**：系统已安装运行 **DeepSeek Harness (DSH)** 环境。
+> **前置条件**：已安装运行 **DeepSeek Harness (DSH) v44 或更高版本**。
+> **重要变化**：DSH v44 起，模式（agent preset）**不再是目录**，而是 profile 里声明的一行 `@deepseek-ai/dsh-agent-preset`。本项目的安装脚本会把这一行写进你的 profile 补丁文件。
 
-### 方式 A：一键在线安装（推荐）
+### 方式 A：一键安装（推荐）
 
 #### 🔹 Windows 用户 (PowerShell)
 以普通或管理员身份打开 PowerShell，粘贴运行：
 ```powershell
-iex ([Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/install.ps1')))
+iex ([Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v2.0.0/install.ps1')))
 ```
 
-> 为什么不用更短的 `irm ... | iex`？Windows PowerShell 5.1 会把下载内容按错误编码解码，导致中文提示变乱码（**不影响安装，只是提示难看**）。上面这行显式按 UTF-8 读取，中文提示就正常。
+> 为什么不用更短的 `irm ... | iex`？Windows PowerShell 5.1 会把下载内容按错误编码解码，导致中文提示变乱码（**不影响安装**）。上面这行显式按 UTF-8 读取，中文提示就正常。
 
 #### 🔹 macOS / Linux 用户 (Terminal)
 打开终端，复制运行：
 ```bash
-curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v1.0.0/install.sh | bash
+curl -fsSL https://cdn.jsdelivr.net/gh/YH-continuing/coursework-writer@v2.0.0/install.sh | bash
 ```
+
+安装完成后，**完全退出 DSH 再重新打开**，然后进入 **设置 → Agent 预设 → 自定义**，选中 **「结课作业写作」**。
 
 ---
 
-### 方式 B：国内备用镜像源安装
+### 方式 B：国内备用镜像源（jsDelivr 不通时）
 
-如果 jsDelivr 网络连接受限，可使用国内 Gitee 镜像加速或手动放置：
+从 Gitee 克隆后，手动把补丁片段追加到 profile 的补丁文件：
 
 ```bash
-# 克隆仓库
 git clone https://gitee.com/hu-youjun-114514/coursework-writer.git
-# 将预设目录拷贝至 DSH 模式库
-# Windows:
-Copy-Item -Recurse "coursework-writer\preset\coursework-writer" "$HOME\.dsh\.agent-presets\"
-# macOS/Linux:
-cp -r coursework-writer/preset/coursework-writer ~/.dsh/.agent-presets/
+
+# macOS / Linux（把 <profile> 换成你的 profile 名，桌面版通常是 desktop）
+cat coursework-writer/preset/coursework-writer.patch.yml >> ~/.dsh/profiles/<profile>/cordis.patch.yml
+```
+```powershell
+# Windows
+Add-Content -Encoding UTF8 "$HOME\.dsh\profiles\<profile>\cordis.patch.yml" `
+  (Get-Content ".\coursework-writer\preset\coursework-writer.patch.yml" -Raw)
 ```
 
-安装完成后，**重启或刷新 DSH**，在模式选择列表中选择 **「结课作业写作」** 即可！
+> ⚠️ 如果该补丁文件当前内容只有空补丁 `[]`，请先把那一行 `[]` 删掉再追加（或者直接用方式 A 的脚本，它会自动处理）。
+
+---
+
+### 卸载
+
+删除 `~/.dsh/profiles/<profile>/cordis.patch.yml` 中从 `# 结课作业写作助手` 开始到文件末尾的那一段即可（安装脚本会留一份 `.bak-coursework` 备份）。
 
 ---
 
@@ -121,7 +132,7 @@ cp -r coursework-writer/preset/coursework-writer ~/.dsh/.agent-presets/
 
 <details>
 <summary><b>Q1: 安装完后在 DSH 模式列表里找不到该模式？</b></summary>
-请完全关闭并重启 DSH 客户端，或在 DSH 的模式管理面板中点击“刷新预设列表”。确保预设文件夹位于 <code>~/.dsh/.agent-presets/coursework-writer/</code>。
+模式只在 DSH <b>启动时</b>加载，所以请<b>完全退出 DSH（含系统托盘）再重新打开</b>，然后到 <b>设置 → Agent 预设 → 自定义</b> 查看。若仍没有，确认 <code>~/.dsh/profiles/&lt;profile&gt;/cordis.patch.yml</code> 中包含 <code>preset-coursework-writer</code>。
 </details>
 
 <details>
@@ -131,9 +142,7 @@ cp -r coursework-writer/preset/coursework-writer ~/.dsh/.agent-presets/
 
 <details>
 <summary><b>Q3: 如何调整或定制默认写作规则？</b></summary>
-可直接使用文本编辑器打开并修改：
-<code>~/.dsh/.agent-presets/coursework-writer/agent.cordis.yml</code>
-找到其中的 <code>persona.text</code> 字段，即可调整提示词约束与风格。
+编辑 <code>~/.dsh/profiles/&lt;profile&gt;/cordis.patch.yml</code>，找到 <code>preset-coursework-writer</code> 那一段里的 <code>persona</code> → <code>config.prefix</code>，那里就是写作规则正文；改完重启 DSH 生效。
 </details>
 
 ---
